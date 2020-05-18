@@ -34,7 +34,9 @@ namespace Application.Account
 
         public object RemoveById(int id)
         {
-
+            _repositoryManager
+                .Repository<Persistance.Entities.Account>()
+                .Delete(o => o.Id == id);
             return null;
         }
 

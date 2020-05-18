@@ -58,17 +58,13 @@ namespace Persistance.Database
 
         public List<Entity> Delete<Entity>(Func<Entity, bool> predicate) where Entity : class, new()
         {
-            DbSet<Entity> set = _database.Set<Entity>();
-            Entity[] toRemoves = set.Where(predicate).ToArray();
+            IEnumerable<Entity> enu = _database.Set<Entity>()
+                .Where(predicate);
 
-            List<Entity> removedEntities = new List<Entity>(toRemoves);
+            foreach(Entity entity in enu)
+                _database.Set<Entity>().Remove(entity);
 
-            foreach (Entity toRemove in toRemoves)
-                _database.Remove(toRemove);
-
-            _database.SaveChanges();
-
-            return removedEntities;
+            return enu.ToList();
         }
 
         public Entity Insert<Entity>(Entity item) where Entity : class
