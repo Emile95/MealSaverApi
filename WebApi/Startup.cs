@@ -15,6 +15,7 @@ using Application.Account.DataModel.Seeked.Data;
 using Application.Interface.SeekedDataMapping;
 using Application.Account.DataModel.Seeked.Mapping;
 using Application.Interface.SendedDataValidation;
+using Persistance.RepositoryProfiles.Meal;
 
 namespace WebApi
 {
@@ -49,15 +50,15 @@ namespace WebApi
                 config.AddProfile(new AccountRepositoryProfile(
                     serviceProvider.GetService<IDatabase>()
                 ));
+                config.AddProfile(new MealRepositoryProfile(
+                    serviceProvider.GetService<IDatabase>()
+                ));
             }).CreateRepositoryManager());
 
             //Account app
 
             services.AddScoped<ISeekedDataMapping<AccountView>, AccountViewMapping>();
-
             services.AddScoped<ISendedDataValidation<AccountModel>, AccountModelValidation>();
-
-            //Comment app
 
             serviceProvider = services.BuildServiceProvider();
 
