@@ -23,12 +23,24 @@ namespace Application.Account
 
         public object Add(AccountModel account)
         {
-            return Insert<Persistance.Entities.Account, AccountModel>(account);
+            ValidateData(account);
+
+            return _repositoryManager
+                .Repository<Persistance.Entities.Account>()
+                .Insert(_mapper.Map<Persistance.Entities.Account>(account));
         }
 
         public object Update(AccountModel account)
         {
-            Update<Persistance.Entities.Account, AccountModel>(account, o => o.Id == account.Id);
+            ValidateData(account);
+
+            _repositoryManager
+                .Repository<Persistance.Entities.Account>()
+                .Update(
+                    o => o.Id == account.Id,
+                   _mapper.Map<Persistance.Entities.Account>(account)
+                );
+
             return null; 
         }
 
