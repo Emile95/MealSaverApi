@@ -3,9 +3,9 @@ using Persistance.Entities;
 
 namespace Persistance.Database.Context
 {
-    public partial class VimoContext : DbContext
+    public partial class MealSaverContext : DbContext
     {
-        public VimoContext(DbContextOptions<VimoContext> options)
+        public MealSaverContext(DbContextOptions<MealSaverContext> options)
             : base(options) {}
 
         //Normal Table

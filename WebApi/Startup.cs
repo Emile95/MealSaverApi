@@ -38,7 +38,7 @@ namespace WebApi
             }));
 
             //Persistances
-            services.AddDbContext<VimoContext>(options => options.UseSqlServer("Server=EMILE-PC;Database=MealSaver;Trusted_Connection=True;"));
+            services.AddDbContext<MealSaverContext>(options => options.UseSqlServer("Server=EMILE-PC;Database=MealSaver;Trusted_Connection=True;"));
             services.AddScoped<IDatabase, Database>();
 
             var serviceProvider = services.BuildServiceProvider();

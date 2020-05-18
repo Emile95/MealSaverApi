@@ -12,10 +12,10 @@ namespace Persistance.Database
     {
         #region Properties and Constructor
 
-        private readonly VimoContext _database;
+        private readonly MealSaverContext _database;
 
         public Database(
-             VimoContext database
+             MealSaverContext database
         )
         {
             _database = database;
