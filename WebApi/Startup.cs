@@ -15,6 +15,11 @@ using Application.Account.DataModel.Seeked.Data;
 using Application.Interface.SeekedDataMapping;
 using Application.Account.DataModel.Seeked.Mapping;
 using Application.Interface.SendedDataValidation;
+using Persistance.RepositoryProfiles.Meal;
+using Application.Meal.DataModel.Seeked.Mapping;
+using Application.Meal.DataModel.Seeked.Data;
+using Application.Meal.DataModel.Sended;
+using Application.Meal.Interface;
 
 namespace WebApi
 {
@@ -49,12 +54,20 @@ namespace WebApi
                 config.AddProfile(new AccountRepositoryProfile(
                     serviceProvider.GetService<IDatabase>()
                 ));
+                config.AddProfile(new MealRepositoryProfile(
+                    serviceProvider.GetService<IDatabase>()
+                ));
             }).CreateRepositoryManager());
 
             //Account app
 
             services.AddScoped<ISeekedDataMapping<AccountView>, AccountViewMapping>();
             services.AddScoped<ISendedDataValidation<AccountModel>, AccountModelValidation>();
+
+            //Meal app
+
+            services.AddScoped<ISeekedDataMapping<MealView>, MealtViewMapping>();
+            services.AddScoped<ISendedDataValidation<MealModel>, MealModelValidation>();
 
             serviceProvider = services.BuildServiceProvider();
 
@@ -65,6 +78,9 @@ namespace WebApi
                 config.AddProfile(new AccountDataMapProfile(
                     serviceProvider.GetService<ISeekedDataMapping<AccountView>>()
                 ));
+                config.AddProfile(new MealDataMapProfile(
+                    serviceProvider.GetService<ISeekedDataMapping<MealView>>()
+                ));
             }).CreateMapper());
 
             //Data Validator
@@ -73,11 +89,18 @@ namespace WebApi
                 config.AddProfile(new AccountValidationProfile(
                     serviceProvider.GetService<ISendedDataValidation<AccountModel>>()
                 ));
+                config.AddProfile(new MealValidationProfile(
+                    serviceProvider.GetService<ISendedDataValidation<MealModel>>()
+                ));
             }).CreateValidator());
 
             //Account App
             services.AddScoped<IAccountCommand, AccountCommand>();
             services.AddScoped<IAccountQuery, AccountQuery>();
+
+            //Meal App
+            services.AddScoped<IMealCommand, MealCommand>();
+            services.AddScoped<IMealQuery, MealQuery>();
 
             services.AddMvc();
         }

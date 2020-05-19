@@ -19,7 +19,7 @@ namespace Application.Account
 
         #endregion
 
-        #region IUserCommand implementation
+        #region IAccountCommand implementation
 
         public object Add(AccountModel account)
         {
