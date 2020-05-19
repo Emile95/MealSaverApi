@@ -17,7 +17,7 @@ namespace Application.Account
         )
         {
             CreateMap<MealModel, Persistance.Entities.Meal>()
-                .ForMember(o => o.Date, opt => opt.MapFrom(o => DateTime.Parse(o.Date)));
+                .ForMember(o => o.Datetime, opt => opt.MapFrom(o => DateTime.Parse(o.Datetime)));
             CreateMap<Persistance.Entities.Meal, MealModel>();
 
             _mealViewMapping = mealViewMapping;

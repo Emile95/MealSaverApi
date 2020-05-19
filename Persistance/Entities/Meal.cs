@@ -10,11 +10,13 @@ namespace Persistance.Entities
         {
             Id = entity.Id;
             AccountId = entity.AccountId;
-            Date = entity.Date;
+            Description = entity.Description;
+            Datetime = entity.Datetime;
         }
 
         public int Id { get; set; }
         public int AccountId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Datetime { get; set; }
+        public string Description { get; set; }
     }
 }

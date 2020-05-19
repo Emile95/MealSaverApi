@@ -39,8 +39,22 @@ namespace Application.Meal.DataModel.Sended
         {
             profile.CreateValidator<MealModel>()
                 .ForValue(
-                    "Date",
-                    data => data.Date,
+                    "Description",
+                    data => data.Description,
+                    value => value
+                        .ForNoValidate(o => o == null)
+                        .ForValidate(
+                            o => o.Length > 1,
+                            "MinCharacters:1"
+                        )
+                        .ForValidate(
+                            o => o.Length <= 100,
+                            "MaxCharacters:100"
+                        )
+                )
+                .ForValue(
+                    "Datetime",
+                    data => data.Datetime,
                     value => value
                         .ForNoValidate(o => o == null)
                         .ForValidate(

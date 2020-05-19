@@ -17,7 +17,7 @@ namespace Persistance.RepositoryProfiles.Meal
                 .ForInsert(item => _database.Insert(item))
                 .ForUpdate((predicate,item) => _database.Update(predicate,item))
                 .ForSelect((predicate,length,index) => 
-                    _database.Select(predicate, o => new MealInfoSelector { Id = o.Id, AccountId = o.AccountId, Date = o.Date }, length,index))
+                    _database.Select(predicate, o => new MealInfoSelector { Id = o.Id, AccountId = o.AccountId, Description = o.Description, Datetime = o.Datetime }, length,index))
                 .ForSelect((predicate, length, index) =>
                     _database.Select(predicate, o => new EmptySelector {  }, length, index));
         }
