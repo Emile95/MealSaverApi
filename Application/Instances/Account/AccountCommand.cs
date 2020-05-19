@@ -6,7 +6,7 @@ using RepositoryManager;
 
 namespace Application.Account
 {
-    public class AccountCommand : Command, IAccountCommand 
+    public class AccountCommand : App, IAccountCommand 
     {
         #region Properties and Constructor
 
@@ -38,7 +38,7 @@ namespace Application.Account
                 .Repository<Persistance.Entities.Account>()
                 .Update(
                     o => o.Id == account.Id,
-                   _mapper.Map<Persistance.Entities.Account>(account)
+                    _mapper.Map<Persistance.Entities.Account>(account)
                 );
 
             return null; 

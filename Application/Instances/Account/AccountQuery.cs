@@ -3,23 +3,24 @@ using AutoMapper;
 using RepositoryManager;
 using Persistance.RepositoryProfiles.Account;
 using Application.Account.DataModel.Seeked.Data;
+using DataValidator;
 
 namespace Application.Account
 {
-    public class AccountQuery : Query, IAccountQuery
+    public class AccountQuery : App, IAccountQuery
     {
         #region Properties and Constructor
 
         public AccountQuery (
             IRepositoryManager repositoryManager,
+            IDataValidator dataValidator,
             IMapper mapper
-        ) : base(repositoryManager, mapper)
+        ) : base(repositoryManager, dataValidator, mapper)
         {}
 
         #endregion
 
-        #region IUserQuery implementation
-
+        #region IAccountQuery implementation
 
         #endregion
     }
