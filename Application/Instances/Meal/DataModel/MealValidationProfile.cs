@@ -2,7 +2,7 @@
 using Application.Interface.SendedDataValidation;
 using DataValidator.Configuration;
 
-namespace Application.Account
+namespace Application.Meal
 {
     public class MealValidationProfile : Profile
     {

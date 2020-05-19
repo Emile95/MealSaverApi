@@ -4,7 +4,7 @@ using Application.Interface.SeekedDataMapping;
 using AutoMapper;
 using System;
 
-namespace Application.Account
+namespace Application.Meal
 {
     public class MealDataMapProfile : Profile
     {

@@ -20,6 +20,13 @@ using Application.Meal.DataModel.Seeked.Mapping;
 using Application.Meal.DataModel.Seeked.Data;
 using Application.Meal.DataModel.Sended;
 using Application.Meal.Interface;
+using Persistance.RepositoryProfiles.Aliment;
+using Application.Meal;
+using Application.Aliment.DataModel.Seeked.Mapping;
+using Application.Aliment.DataModel.Seeked.Data;
+using Application.Aliment.DataModel.Sended;
+using Application.Aliment;
+using Application.Aliment.Interface;
 
 namespace WebApi
 {
@@ -57,6 +64,9 @@ namespace WebApi
                 config.AddProfile(new MealRepositoryProfile(
                     serviceProvider.GetService<IDatabase>()
                 ));
+                config.AddProfile(new AlimentRepositoryProfile(
+                    serviceProvider.GetService<IDatabase>()
+                ));
             }).CreateRepositoryManager());
 
             //Account app
@@ -68,6 +78,11 @@ namespace WebApi
 
             services.AddScoped<ISeekedDataMapping<MealView>, MealtViewMapping>();
             services.AddScoped<ISendedDataValidation<MealModel>, MealModelValidation>();
+
+            //Aliment app
+
+            services.AddScoped<ISeekedDataMapping<AlimentView>, AlimentViewMapping>();
+            services.AddScoped<ISendedDataValidation<AlimentModel>, AlimentModelValidation>();
 
             serviceProvider = services.BuildServiceProvider();
 
@@ -81,6 +96,9 @@ namespace WebApi
                 config.AddProfile(new MealDataMapProfile(
                     serviceProvider.GetService<ISeekedDataMapping<MealView>>()
                 ));
+                config.AddProfile(new AlimentDataMapProfile(
+                    serviceProvider.GetService<ISeekedDataMapping<AlimentView>>()
+                ));
             }).CreateMapper());
 
             //Data Validator
@@ -92,6 +110,9 @@ namespace WebApi
                 config.AddProfile(new MealValidationProfile(
                     serviceProvider.GetService<ISendedDataValidation<MealModel>>()
                 ));
+                config.AddProfile(new AlimentValidationProfile(
+                    serviceProvider.GetService<ISendedDataValidation<AlimentModel>>()
+                ));
             }).CreateValidator());
 
             //Account App
@@ -101,6 +122,10 @@ namespace WebApi
             //Meal App
             services.AddScoped<IMealCommand, MealCommand>();
             services.AddScoped<IMealQuery, MealQuery>();
+
+            //Meal App
+            services.AddScoped<IAlimentCommand, AlimentCommand>();
+            services.AddScoped<IAlimentQuery, AlimentQuery>();
 
             services.AddMvc();
         }

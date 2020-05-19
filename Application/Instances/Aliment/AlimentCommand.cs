@@ -1,16 +1,16 @@
-﻿using Application.Meal.Interface;
-using Application.Meal.DataModel.Sended;
+﻿using Application.Aliment.Interface;
+using Application.Aliment.DataModel.Sended;
 using DataValidator;
 using AutoMapper;
 using RepositoryManager;
 
-namespace Application.Meal
+namespace Application.Aliment
 {
-    public class MealCommand : App, IMealCommand 
+    public class AlimentCommand : App, IAlimentCommand 
     {
         #region Properties and Constructor
 
-        public MealCommand(
+        public AlimentCommand(
             IRepositoryManager repositoryManager,
             IDataValidator dataValidator,
             IMapper mapper
@@ -19,26 +19,26 @@ namespace Application.Meal
 
         #endregion
 
-        #region IMealCommand implementation
+        #region IAlimentCommand implementation
 
-        public object Add(MealModel model)
+        public object Add(AlimentModel model)
         {
             ValidateData(model);
 
             return _repositoryManager
-                .Repository<Persistance.Entities.Meal>()
-                .Insert(_mapper.Map<Persistance.Entities.Meal>(model));
+                .Repository<Persistance.Entities.Aliment>()
+                .Insert(_mapper.Map<Persistance.Entities.Aliment>(model));
         }
 
-        public object Update(MealModel model)
+        public object Update(AlimentModel model)
         {
             ValidateData(model);
 
             _repositoryManager
-                .Repository<Persistance.Entities.Meal>()
+                .Repository<Persistance.Entities.Aliment>()
                 .Update(
                     o => o.Id == model.Id,
-                    _mapper.Map<Persistance.Entities.Meal>(model)
+                    _mapper.Map<Persistance.Entities.Aliment>(model)
                 );
 
             return null; 
@@ -47,7 +47,7 @@ namespace Application.Meal
         public object RemoveById(int id)
         {
             _repositoryManager
-                .Repository<Persistance.Entities.Meal>()
+                .Repository<Persistance.Entities.Aliment>()
                 .Delete(o => o.Id == id);
             return null;
         }

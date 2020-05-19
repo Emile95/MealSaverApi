@@ -10,6 +10,7 @@ namespace Persistance.Database.Context
 
         //Normal Table
         public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Aliment> Aliment { get; set; }
         public virtual DbSet<Meal> Meal { get; set; }
     }
 }

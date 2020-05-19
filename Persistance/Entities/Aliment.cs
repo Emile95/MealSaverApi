@@ -2,19 +2,19 @@
 
 namespace Persistance.Entities
 {
-    public partial class Meal
+    public partial class Aliment
     {
-        public Meal() { }
+        public Aliment() { }
 
-        public Meal(Meal entity)
+        public Aliment(Aliment entity)
         {
             Id = entity.Id;
             AccountId = entity.AccountId;
-            Datetime = entity.Datetime;
+            Name = entity.Name;
         }
 
         public int Id { get; set; }
         public int AccountId { get; set; }
-        public DateTime Datetime { get; set; }
+        public string Name { get; set; }
     }
 }

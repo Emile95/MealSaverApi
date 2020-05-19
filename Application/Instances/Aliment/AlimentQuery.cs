@@ -1,17 +1,17 @@
-﻿using Application.Meal.Interface;
+﻿using Application.Aliment.Interface;
 using AutoMapper;
 using RepositoryManager;
-using Persistance.RepositoryProfiles.Meal;
-using Application.Meal.DataModel.Seeked.Data;
+using Persistance.RepositoryProfiles.Aliment;
+using Application.Aliment.DataModel.Seeked.Data;
 using DataValidator;
 
-namespace Application.Meal
+namespace Application.Aliment
 {
-    public class MealQuery : App, IMealQuery
+    public class AlimentQuery : App, IAlimentQuery
     {
         #region Properties and Constructor
 
-        public MealQuery(
+        public AlimentQuery(
             IRepositoryManager repositoryManager,
             IDataValidator dataValidator,
             IMapper mapper
@@ -20,7 +20,7 @@ namespace Application.Meal
 
         #endregion
 
-        #region IMealQuery implementation
+        #region IAlimentQuery implementation
 
         #endregion
     }

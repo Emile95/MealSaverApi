@@ -6,15 +6,15 @@ using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Application.Meal.DataModel.Sended
+namespace Application.Aliment.DataModel.Sended
 {
-    public class MealModelValidation : ISendedDataValidation<MealModel>
+    public class AlimentModelValidation : ISendedDataValidation<AlimentModel>
     {
         #region Constructor and Properties
 
         private readonly IRepositoryManager _repositoryManager;
 
-        public MealModelValidation(
+        public AlimentModelValidation(
             IRepositoryManager repositoryManager
         )
         {
@@ -25,27 +25,21 @@ namespace Application.Meal.DataModel.Sended
 
         #region Private Methods
 
-        public bool ValidateDate(string dateStr)
-        {
-            DateTime date;
-            return DateTime.TryParse(dateStr, out date);
-        }
-
         #endregion
 
         #region ISendedDataValidation Implementation
 
         public void CreateValidations(Profile profile)
         {
-            profile.CreateValidator<MealModel>()
+            profile.CreateValidator<AlimentModel>()
                 .ForValue(
-                    "Datetime",
-                    data => data.Datetime,
+                    "Name",
+                    data => data.Name,
                     value => value
                         .ForNoValidate(o => o == null)
                         .ForValidate(
-                            o => ValidateDate(o),
-                            "IsNotValidDate"
+                            o => o.Length <= 20,
+                            "MaxCharacters:20"
                         )
                 );
         }

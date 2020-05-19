@@ -1,23 +1,23 @@
 ﻿using Persistance.Database;
 using RepositoryManager.Configuration;
-namespace Persistance.RepositoryProfiles.Meal
+namespace Persistance.RepositoryProfiles.Aliment
 {
-    public class MealRepositoryProfile : RepositoryProfile
+    public class AlimentRepositoryProfile : RepositoryProfile
     {
         private readonly IDatabase _database;
 
-        public MealRepositoryProfile(
+        public AlimentRepositoryProfile(
             IDatabase database
         )
         {
             _database = database;
 
-            CreateRepository<Entities.Meal>()
+            CreateRepository<Entities.Aliment>()
                 .ForDelete(predicate => _database.Delete(predicate))
                 .ForInsert(item => _database.Insert(item))
                 .ForUpdate((predicate,item) => _database.Update(predicate,item))
                 .ForSelect((predicate,length,index) => 
-                    _database.Select(predicate, o => new MealInfoSelector { Id = o.Id, AccountId = o.AccountId, Datetime = o.Datetime }, length,index))
+                    _database.Select(predicate, o => new AlimentInfoSelector { Id = o.Id, AccountId = o.AccountId, Name = o.Name }, length,index))
                 .ForSelect((predicate, length, index) =>
                     _database.Select(predicate, o => new EmptySelector {  }, length, index));
         }
