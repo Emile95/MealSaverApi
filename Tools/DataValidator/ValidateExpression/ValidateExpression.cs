@@ -22,6 +22,14 @@ namespace DataValidator.ValidateExpression
             return this;
         }
 
+        public IValidateExpression<Data> ForValue<Value>(Expression<Func<Data, Value>> expression, Action<IValueConfigurationExpression<Data, Value>> valueOption)
+        {
+            ValueConfigureExpression<Data, Value> valueConfig = new ValueConfigureExpression<Data, Value>(expression, null);
+            valueOption(valueConfig);
+            ValueConfigs.Add(valueConfig);
+            return this;
+        }
+
         public DataValidationException Validate(object data)
         {
             DataValidationException exception = null;

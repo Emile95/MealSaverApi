@@ -53,7 +53,6 @@ namespace Application.Aliment.DataModel.Sended
                         )
                 )
                 .ForValue(
-                    "Name",
                     data => new Tuple<string,int>(data.Name, data.AccountId.Value),
                     value => value
                         .ForValidate(
