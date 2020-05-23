@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Application.Node.DataModel.Sended;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -28,7 +30,18 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody]LoginModel body)
         {
-            return this.Return(() => _command.Login(body));
+            return this.Return(() => {
+                object result = _command.Login(body);
+                HttpContext.Session.SetInt32("AccountId", Convert.ToInt32(result.GetType().GetProperty("Id").GetValue(result)));
+                return result;
+            });
+        }
+
+        [HttpGet("session/accountId")]
+        public IActionResult GetSessionAccountId()
+        {
+            int? value = HttpContext.Session.GetInt32("AccountId");
+            return this.Return(() => new { Value = value } );
         }
     }
 }

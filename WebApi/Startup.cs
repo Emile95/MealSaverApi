@@ -31,6 +31,7 @@ using Persistance.RepositoryProfiles.MealXAliment;
 using Application.Node;
 using Application.Node.DataModel.Sended;
 using Application.Node.Interface;
+using System;
 
 namespace WebApi
 {
@@ -46,6 +47,15 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+
+
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -156,6 +166,7 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSession();
             app.UseMvc();
         }
     }

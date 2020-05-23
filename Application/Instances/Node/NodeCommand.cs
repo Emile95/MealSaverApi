@@ -4,6 +4,7 @@ using DataValidator;
 using AutoMapper;
 using RepositoryManager;
 using Persistance.RepositoryProfiles.Account;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Node
 {
@@ -25,10 +26,10 @@ namespace Application.Node
         public object Login(LoginModel model)
         {
             ValidateData(model);
-            
+
             return _repositoryManager
                 .Repository<Persistance.Entities.Account>()
-                .Select<AccountLimitedInfoSelector>(o => o.Email == model.Account);
+                .Select<AccountLimitedInfoSelector>(o => o.Email == model.Account)[0];
         }
 
         #endregion
