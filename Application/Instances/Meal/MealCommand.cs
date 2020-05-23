@@ -29,8 +29,17 @@ namespace Application.Meal
                 .Repository<Persistance.Entities.Meal>()
                 .Insert(_mapper.Map<Persistance.Entities.Meal>(model));
 
-
-
+            model.Aliments.ForEach(aliment =>
+            {
+                _repositoryManager
+                    .Repository<Persistance.Entities.MealXAliment>()
+                    .Insert(new Persistance.Entities.MealXAliment() {
+                        MealId = meal.Id,
+                        AlimentId = aliment.Id.Value,
+                        Quantity = aliment.Quantity
+                    });
+            });
+            
             return meal;
         }
 

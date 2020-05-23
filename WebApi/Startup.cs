@@ -27,6 +27,7 @@ using Application.Aliment.DataModel.Seeked.Data;
 using Application.Aliment.DataModel.Sended;
 using Application.Aliment;
 using Application.Aliment.Interface;
+using Persistance.RepositoryProfiles.MealXAliment;
 
 namespace WebApi
 {
@@ -65,6 +66,9 @@ namespace WebApi
                     serviceProvider.GetService<IDatabase>()
                 ));
                 config.AddProfile(new AlimentRepositoryProfile(
+                    serviceProvider.GetService<IDatabase>()
+                ));
+                config.AddProfile(new MealXAlimentRepositoryProfile(
                     serviceProvider.GetService<IDatabase>()
                 ));
             }).CreateRepositoryManager());

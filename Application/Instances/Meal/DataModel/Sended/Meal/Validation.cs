@@ -5,8 +5,6 @@ using Persistance.RepositoryProfiles.Aliment;
 using RepositoryManager;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace Application.Meal.DataModel.Sended
 {
@@ -27,12 +25,12 @@ namespace Application.Meal.DataModel.Sended
 
         #region Private Methods
 
-        public bool ValidateAlimentIds(List<List<int>> aliments)
+        public bool ValidateAlimentIds(List<MealModel.Aliment> aliments)
         {
-            foreach(List<int> aliment in aliments) {
+            foreach(MealModel.Aliment aliment in aliments) {
                 if (_repositoryManager
                     .Repository<Persistance.Entities.Aliment>()
-                    .Select<AlimentInfoSelector>(o => o.Id == aliment[0])
+                    .Select<AlimentInfoSelector>(o => o.Id == aliment.Id.Value)
                     .Count == 0)
                 return false;
             }
