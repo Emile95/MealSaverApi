@@ -25,9 +25,13 @@ namespace Application.Meal
         {
             ValidateData(model);
 
-            return _repositoryManager
+            Persistance.Entities.Meal meal = _repositoryManager
                 .Repository<Persistance.Entities.Meal>()
                 .Insert(_mapper.Map<Persistance.Entities.Meal>(model));
+
+
+
+            return meal;
         }
 
         public object Update(MealModel model)

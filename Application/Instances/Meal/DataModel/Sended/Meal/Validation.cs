@@ -1,8 +1,10 @@
 ﻿using Application.Interface.SendedDataValidation;
 using DataValidator.Configuration;
 using Persistance.RepositoryProfiles;
+using Persistance.RepositoryProfiles.Aliment;
 using RepositoryManager;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -25,6 +27,18 @@ namespace Application.Meal.DataModel.Sended
 
         #region Private Methods
 
+        public bool ValidateAlimentIds(List<List<int>> aliments)
+        {
+            foreach(List<int> aliment in aliments) {
+                if (_repositoryManager
+                    .Repository<Persistance.Entities.Aliment>()
+                    .Select<AlimentInfoSelector>(o => o.Id == aliment[0])
+                    .Count == 0)
+                return false;
+            }
+            return true;
+        }
+
         public bool ValidateDate(string dateStr)
         {
             DateTime date;
@@ -45,6 +59,16 @@ namespace Application.Meal.DataModel.Sended
                         .ForNoValidate(o => o == null)
                         .ForValidate(
                             o => ValidateDate(o),
+                            "IsNotValidDate"
+                        )
+                )
+                .ForValue(
+                    "AlimentIds",
+                    data => data.Aliments,
+                    value => value
+                        .ForNoValidate(o => o == null)
+                        .ForValidate(
+                            o => ValidateAlimentIds(o),
                             "IsNotValidDate"
                         )
                 );
