@@ -28,9 +28,6 @@ using Application.Aliment.DataModel.Sended;
 using Application.Aliment;
 using Application.Aliment.Interface;
 using Persistance.RepositoryProfiles.MealXAliment;
-using Application.Node;
-using Application.Node.DataModel.Sended;
-using Application.Node.Interface;
 using System;
 
 namespace WebApi
@@ -86,27 +83,33 @@ namespace WebApi
                 ));
             }).CreateRepositoryManager());
 
-            //Account app
+            //ACCOUNT
 
+            //Query Fetch Mapping
             services.AddScoped<ISeekedDataMapping<AccountView>, AccountViewMapping>();
+
+            //Sended Data Model Validation
             services.AddScoped<ISendedDataValidation<AccountModel>, AccountModelValidation>();
-
-            //Meal app
-
-            services.AddScoped<ISeekedDataMapping<MealView>, MealtViewMapping>();
-            services.AddScoped<ISendedDataValidation<MealModel>, MealModelValidation>();
-
-            //Aliment app
-
-            services.AddScoped<ISeekedDataMapping<AlimentView>, AlimentViewMapping>();
-            services.AddScoped<ISendedDataValidation<AlimentModel>, AlimentModelValidation>();
-
-            //Node app
-
             services.AddScoped<ISendedDataValidation<LoginModel>, LoginModelValidation>();
 
-            serviceProvider = services.BuildServiceProvider();
+            //MEAL
 
+            //Query Fetch Mapping
+            services.AddScoped<ISeekedDataMapping<MealView>, MealtViewMapping>();
+
+            //Sended Data Model Validation
+            services.AddScoped<ISendedDataValidation<MealModel>, MealModelValidation>();
+
+            //ALIMENT
+
+            //Query Fetch Mapping
+            services.AddScoped<ISeekedDataMapping<AlimentView>, AlimentViewMapping>();
+
+            //Sended Data Model Validation
+            services.AddScoped<ISendedDataValidation<AlimentModel>, AlimentModelValidation>();
+
+            //Provider
+            serviceProvider = services.BuildServiceProvider();
 
             //Auto Mapper
             services.AddSingleton(new MapperConfiguration(config =>
@@ -126,16 +129,14 @@ namespace WebApi
             services.AddSingleton(new Configuration(config =>
             {
                 config.AddProfile(new AccountValidationProfile(
-                    serviceProvider.GetService<ISendedDataValidation<AccountModel>>()
+                    serviceProvider.GetService<ISendedDataValidation<AccountModel>>(),
+                    serviceProvider.GetService<ISendedDataValidation<LoginModel>>()
                 ));
                 config.AddProfile(new MealValidationProfile(
                     serviceProvider.GetService<ISendedDataValidation<MealModel>>()
                 ));
                 config.AddProfile(new AlimentValidationProfile(
                     serviceProvider.GetService<ISendedDataValidation<AlimentModel>>()
-                ));
-                config.AddProfile(new NodeValidationProfile(
-                    serviceProvider.GetService<ISendedDataValidation<LoginModel>>()
                 ));
             }).CreateValidator());
 
@@ -150,10 +151,6 @@ namespace WebApi
             //Meal App
             services.AddScoped<IAlimentCommand, AlimentCommand>();
             services.AddScoped<IAlimentQuery, AlimentQuery>();
-
-            //Node App
-            services.AddScoped<INodeCommand, NodeCommand>();
-            services.AddScoped<INodeQuery, NodeQuery>();
 
             services.AddMvc();
         }

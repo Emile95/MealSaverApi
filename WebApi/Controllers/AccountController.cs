@@ -30,7 +30,13 @@ namespace WebApi.Controllers
         {
             return this.Return(() => _accountCommand.Add(body));
         }
-        
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]LoginModel body)
+        {
+            return this.Return(() => _accountQuery.GetAccountIdByLogin(body));
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteAccount(int id)
         {
