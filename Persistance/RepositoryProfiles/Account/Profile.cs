@@ -19,6 +19,8 @@ namespace Persistance.RepositoryProfiles.Account
                 .ForSelect((predicate,length,index) => 
                     _database.Select(predicate, o => new AccountLimitedInfoSelector { Id = o.Id, FirstName = o.FirstName, LastName = o.LastName }, length,index))
                 .ForSelect((predicate, length, index) =>
+                    _database.Select(predicate, o => new AccountPasswordInfoSelector {  Password = o.Password }, length, index))
+                .ForSelect((predicate, length, index) =>
                     _database.Select(predicate, o => new EmptySelector {  }, length, index));
         }
 

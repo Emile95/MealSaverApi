@@ -28,6 +28,9 @@ using Application.Aliment.DataModel.Sended;
 using Application.Aliment;
 using Application.Aliment.Interface;
 using Persistance.RepositoryProfiles.MealXAliment;
+using Application.Node;
+using Application.Node.DataModel.Sended;
+using Application.Node.Interface;
 
 namespace WebApi
 {
@@ -88,6 +91,10 @@ namespace WebApi
             services.AddScoped<ISeekedDataMapping<AlimentView>, AlimentViewMapping>();
             services.AddScoped<ISendedDataValidation<AlimentModel>, AlimentModelValidation>();
 
+            //Node app
+
+            services.AddScoped<ISendedDataValidation<LoginModel>, LoginModelValidation>();
+
             serviceProvider = services.BuildServiceProvider();
 
 
@@ -117,6 +124,9 @@ namespace WebApi
                 config.AddProfile(new AlimentValidationProfile(
                     serviceProvider.GetService<ISendedDataValidation<AlimentModel>>()
                 ));
+                config.AddProfile(new NodeValidationProfile(
+                    serviceProvider.GetService<ISendedDataValidation<LoginModel>>()
+                ));
             }).CreateValidator());
 
             //Account App
@@ -130,6 +140,10 @@ namespace WebApi
             //Meal App
             services.AddScoped<IAlimentCommand, AlimentCommand>();
             services.AddScoped<IAlimentQuery, AlimentQuery>();
+
+            //Node App
+            services.AddScoped<INodeCommand, NodeCommand>();
+            services.AddScoped<INodeQuery, NodeQuery>();
 
             services.AddMvc();
         }
